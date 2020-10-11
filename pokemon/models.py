@@ -4,7 +4,7 @@ from django.db import models
 class Pokemon(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField("person's first name", max_length=255)
-    base_stats =  models.OneToOneField('StatSet', on_delete=models.CASCADE)
+    stats =  models.OneToOneField('StatSet', on_delete=models.CASCADE)
     height = models.IntegerField()
     weight = models.IntegerField()
     preevolution = models.ForeignKey('self', on_delete=models.PROTECT, null=True)
