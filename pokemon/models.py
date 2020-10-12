@@ -7,7 +7,12 @@ class Pokemon(models.Model):
     stats =  models.OneToOneField('StatSet', on_delete=models.CASCADE)
     height = models.IntegerField()
     weight = models.IntegerField()
-    preevolution = models.ForeignKey('self', on_delete=models.PROTECT, null=True)
+    preevolution = models.ForeignKey('self', on_delete=models.PROTECT, null=True, related_name="evolutions")
+
+
+    def __str__(self):
+            return self.name
+
 
 class StatSet(models.Model):
     hp = models.ForeignKey('Stat', on_delete=models.CASCADE, related_name='hp')
