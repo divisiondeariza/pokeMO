@@ -1,25 +1,21 @@
-from pokemon.models import Pokemon, StatSet, Stat
+from pokemon.models import Pokemon, StatSet
 from rest_framework import serializers
 
-class StatSerializer(serializers.ModelSerializer):
+class RelatedPokemonSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Stat
-        exclude = ["id"]
+        model = Pokemon
+        fields = ['id', 'name']
+
 
 class StatSetSerializer(serializers.ModelSerializer):
-    hp = StatSerializer()
-    attack = StatSerializer()
-    defense = StatSerializer()
-    special_attack = StatSerializer()
-    special_defense = StatSerializer()
-    speed = StatSerializer()
     class Meta:
         model = StatSet
-        exclude = ["id"]
+        exclude = ['id']
 
 class PokemonSerializer(serializers.ModelSerializer):
-    evolutions = serializers.StringRelatedField(many=True, read_only=True, required=False)
-    stats = StatSetSerializer()
+    evolutions = RelatedPokemonSerializer(many=True)
+    preevolution = RelatedPokemonSerializer()
+    base_stats = StatSetSerializer()
     class Meta:
         model = Pokemon
         fields = '__all__'
